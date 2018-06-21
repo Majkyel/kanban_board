@@ -10,6 +10,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return str;
     }
+    
+    function randomColorCard() {
+        var colorTable = ['darkgray','#54a0ff','#f368e0','#ee5253'];
+        var colorTableLength = colorTable.length;
+        var randomColor = '';
+        for(var i = 0; i < colorTableLength; i++) {
+            randomColor = colorTable[Math.floor(Math.random() * colorTableLength)];
+        }
+        return randomColor;
+    }
+    console.log(randomColorCard());
 
     function generateTemplate(name, data, basicElement) {
         var template = document.getElementById(name).innerHTML;
@@ -51,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var self = this;
         this.id = randomString();
         this.description = description;
+        
         
         if (description !== null && description !== '') {
             this.element = generateTemplate('card-template', {description: this.description}, 'li');
