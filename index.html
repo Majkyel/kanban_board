@@ -10,6 +10,22 @@
     <div id="board" class="board">
         <h1>Kanban board</h1>
         <button class="create-column"><i class="fas fa-plus"></i> Add new column</button>
+        <div id="AddColumnModal" class="firstModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>What is column name ?</p>
+                <input id="columnInput" class="columnInput"></br>
+                <button id="columnButtonOk" class="columnButtonOk">OK</button>
+            </div>
+        </div>
+        <div id="AddCardModal" class="secondModal">
+            <div class="second-modal-content">
+                <span class="close">&times;</span>
+                <p>What is a describe card ?</p>
+                <input id="cardInput" class="cardInput"></br>
+                <button id="cardButtonOk" class="cardButtonOk">OK</button>
+            </div>
+        </div>
         <div class="column-container"></div>
     </div>
     <script id="column-template" type="x-tmpl-mustache">
