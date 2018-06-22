@@ -99,7 +99,7 @@ body {
                 }    
             }
         }
-        .firstModal, .secondModal {     
+        .first-modal, .second-modal {     
             display: none; 
             position: fixed; 
             z-index: 1; 
@@ -121,13 +121,13 @@ body {
                 p {
                     font-size: 30px;
                 }
-                .columnInput, .cardInput {
+                .column-input, .card-input {
                     padding: 5px;
                     text-align: center;
                     font-size: 30px;
                     margin-bottom: 10px;
                 }
-                .columnButtonOk, .cardButtonOk {
+                .column-button_ok, .card-button_ok {
                     margin: 10px;
                     width: 18%;
                     padding: 5px;
