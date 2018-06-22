@@ -2,8 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    var addColumnModal = document.getElementById('AddColumnModal');
-    var addCardModal = document.getElementById('AddCardModal');
+    var addColumnModal = document.getElementById('addColumnModal');
+    var addCardModal = document.getElementById('addCardModal');
     var closeColumnModal = document.getElementsByClassName('close')[0];
     var closeCardModal = document.getElementsByClassName('close')[1];
 
@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         return randomColor;
     }
-    randomColorCard();
 
     function generateTemplate(name, data, basicElement) {
         var template = document.getElementById(name).innerHTML;
@@ -38,25 +37,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function Column(name) {
-
         var self = this;
         this.id = randomString();
         this.name = name;
-
-        this.element = generateTemplate('column-template', {
-            name: this.name,
-            id: this.id
-        });
-
+        this.element = generateTemplate('column-template', {name: this.name, id: this.id});
         this.element.querySelector('.column').addEventListener('click', function (event) {
-
             if (event.target.classList.contains('btn-delete')) {
                 self.removeColumn();
             }
             if (event.target.classList.contains('add-card')) {
-
                 addCardModal.style.display = 'block';
-
                 closeCardModal.onclick = function () {
                     addCardModal.style.display = 'none';
                 }
@@ -65,53 +55,36 @@ document.addEventListener('DOMContentLoaded', function () {
                         addCardModal.style.display = 'none';
                     }
                 }
-
-                document.getElementById('cardButtonOk').addEventListener('click', function () {
-
-                    var inputCard = document.getElementById('cardInput');
+                /*document.getElementById('card-button_ok').addEventListener('click', function () {
+                    var inputCard = document.getElementById('card-input');
                     var inputCardValue = inputCard.value;
-
-                    if (inputCardValue !== '' && inputCardValue !== null) {
-
+                    if (inputCardValue) {
                         self.addCard(new Card(inputCardValue));
                         addCardModal.style.display = 'none';
                         inputCard.value = '';
-
                     } else if (inputCardValue === '') {
                         alert('You have to write something!');
                     }
-                });
+                });*/
             }
         });
     }
 
     Column.prototype = {
-        addCard: function (card) {
-            this.element.querySelector('ul').appendChild(card.element);
-        },
-        removeColumn: function () {
-            this.element.parentNode.removeChild(this.element);
-        }
+        addCard: function (card) {this.element.querySelector('ul').appendChild(card.element);},
+        removeColumn: function () {this.element.parentNode.removeChild(this.element);}
     };
 
     function Card(description) {
-
         var self = this;
         this.id = randomString();
         this.description = description;
-
-        if (description !== null && description !== '') {
-            this.element = generateTemplate('card-template', {
-                description: this.description
-            }, 'li');
-        } else if (description === null) {
-            alert('No problem :)');
+        if (description) {
+            this.element = generateTemplate('card-template', {description: this.description}, 'li');
         } else if (description === '') {
             alert('You have to write something!');
         }
-
         this.element.querySelector('.card').style.backgroundColor = '#' + randomColorCard();
-
         this.element.querySelector('.card').addEventListener('click', function (event) {
             event.stopPropagation();
             if (event.target.classList.contains('btn-delete')) {
@@ -121,9 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     Card.prototype = {
-        removeCard: function () {
-            this.element.parentNode.removeChild(this.element);
-        }
+        removeCard: function () {this.element.parentNode.removeChild(this.element);}
     }
 
     var board = {
@@ -137,16 +108,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function initSortable(id) {
         var el = document.getElementById(id);
-        var sortable = Sortable.create(el, {
-            group: 'kanban',
-            sort: true
-        });
+        var sortable = Sortable.create(el, {group: 'kanban', sort: true});
     }
 
     document.querySelector('#board .create-column').addEventListener('click', function () {
-
         addColumnModal.style.display = 'block';
-
         closeColumnModal.onclick = function () {
             addColumnModal.style.display = 'none';
         }
@@ -157,23 +123,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('columnButtonOk').addEventListener('click', function () {
-
-        var inputColumn = document.getElementById('columnInput');
+    document.getElementById('column-button_ok').addEventListener('click', function () {
+        var inputColumn = document.getElementById('column-input');
         var inputColumnValue = inputColumn.value;
-
-        if (inputColumnValue !== '' && inputColumnValue !== null) {
-
+        if (inputColumnValue) {
             var column = new Column(inputColumnValue);
-
             board.addColumn(column);
             addColumnModal.style.display = 'none';
             inputColumn.value = '';
-
         } else if (inputColumnValue === '') {
             alert('You have to write something!');
         }
     });
+    
 
     // CREATING COLUMNS
     var todoColumn = new Column('To do');
