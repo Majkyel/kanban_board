@@ -35,7 +35,19 @@ document.addEventListener('DOMContentLoaded', function () {
         element.innerHTML = Mustache.render(template, data);
         return element;
     }
-
+    
+    function showModal(modalAim, closeModal) {
+        modalAim.style.display = 'block';
+        closeModal.onclick = function () {
+            modalAim.style.display = 'none';
+        }
+        window.onclick = function (event) {
+            if (event.target === modalAim) {
+                modalAim.style.display = 'none';
+            }
+        }
+    }
+    
     function Column(name) {
         var self = this;
         this.id = randomString();
@@ -46,26 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 self.removeColumn();
             }
             if (event.target.classList.contains('add-card')) {
-                addCardModal.style.display = 'block';
-                closeCardModal.onclick = function () {
-                    addCardModal.style.display = 'none';
-                }
-                window.onclick = function (event) {
-                    if (event.target === addCardModal) {
-                        addCardModal.style.display = 'none';
-                    }
-                }
-                /*document.getElementById('card-button_ok').addEventListener('click', function () {
+                showModal(addCardModal, closeCardModal);
+                var modalCardButton = document.getElementById('card-button_ok');
+                modalCardButton.onclick = function (event) {
                     var inputCard = document.getElementById('card-input');
                     var inputCardValue = inputCard.value;
-                    if (inputCardValue) {
-                        self.addCard(new Card(inputCardValue));
-                        addCardModal.style.display = 'none';
-                        inputCard.value = '';
-                    } else if (inputCardValue === '') {
-                        alert('You have to write something!');
-                    }
-                });*/
+                    self.addCard(new Card(inputCardValue));
+                    addCardModal.style.display = 'none';
+                    inputCard.value = '';
+                }
             }
         });
     }
@@ -112,15 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.querySelector('#board .create-column').addEventListener('click', function () {
-        addColumnModal.style.display = 'block';
-        closeColumnModal.onclick = function () {
-            addColumnModal.style.display = 'none';
-        }
-        window.onclick = function (event) {
-            if (event.target === addColumnModal) {
-                addColumnModal.style.display = 'none';
-            }
-        }
+        showModal(addColumnModal, closeColumnModal);
     });
 
     document.getElementById('column-button_ok').addEventListener('click', function () {
@@ -136,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     
-
     // CREATING COLUMNS
     var todoColumn = new Column('To do');
     var doingColumn = new Column('Doing');
