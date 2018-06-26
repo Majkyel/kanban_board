@@ -4,10 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var addColumnModal = document.getElementById('addColumnModal');
     var addCardModal = document.getElementById('addCardModal');
-    /*var closeColumnModal = document.getElementsByClassName('close')[0];
-    var closeCardModal = document.getElementsByClassName('close')[1];*/
     var closeFromModal = document.querySelectorAll('#board .close');
-
+    
     function randomString() {
         var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
         var str = '';
@@ -37,19 +35,19 @@ document.addEventListener('DOMContentLoaded', function () {
         return element;
     }
     
-    function showModal(modalAim, closeModal) {
-        modalAim.style.display = 'block';
-        closeModal.onclick = function () {
-            modalAim.style.display = 'none';
-        }
-        window.onclick = function (event) {
-            if (event.target === modalAim) {
-                modalAim.style.display = 'none';
+    function displayNoneModal(object, aim) {
+        object.onclick = function(event) {
+            if(event.target === aim) {
+                aim.style.display = 'none';
             }
-        }
+        } 
     }
     
-    var modalCardButton = document.getElementById('card-button_ok');
+    function showModal(modalAim, closeModal) {
+        modalAim.style.display = 'block';
+        displayNoneModal(closeModal, modalAim);
+        displayNoneModal(window, modalAim);
+    }
     
     function Column(name) {
         var self = this;
@@ -61,15 +59,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 self.removeColumn();
             }
             if (event.target.classList.contains('add-card')) {
-                showModal(addCardModal, closeFromModal);
-                /*var modalCardButton = document.getElementById('card-button_ok');*/
-                /*modalCardButton.onclick = function (event) {
+                showModal(addCardModal, closeFromModal[1]);
+                var modalCardButton = document.getElementById('card-button_ok');
+                modalCardButton.onclick = function (event) {
                     var inputCard = document.getElementById('card-input');
                     var inputCardValue = inputCard.value;
                     self.addCard(new Card(inputCardValue));
                     addCardModal.style.display = 'none';
                     inputCard.value = '';
-                }*/
+                }
             }
         });
     }
@@ -116,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.querySelector('#board .create-column').addEventListener('click', function () {
-        showModal(addColumnModal, closeFromModal);
+        showModal(addColumnModal, closeFromModal[0]);
     });
 
     document.getElementById('column-button_ok').addEventListener('click', function () {
