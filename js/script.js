@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var addColumnModal = document.getElementById('addColumnModal');
     var addCardModal = document.getElementById('addCardModal');
-    var closeColumnModal = document.getElementsByClassName('close')[0];
-    var closeCardModal = document.getElementsByClassName('close')[1];
+    /*var closeColumnModal = document.getElementsByClassName('close')[0];
+    var closeCardModal = document.getElementsByClassName('close')[1];*/
+    var closeFromModal = document.querySelectorAll('#board .close');
 
     function randomString() {
         var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
@@ -48,6 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
+    var modalCardButton = document.getElementById('card-button_ok');
+    
     function Column(name) {
         var self = this;
         this.id = randomString();
@@ -58,15 +61,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 self.removeColumn();
             }
             if (event.target.classList.contains('add-card')) {
-                showModal(addCardModal, closeCardModal);
-                var modalCardButton = document.getElementById('card-button_ok');
-                modalCardButton.onclick = function (event) {
+                showModal(addCardModal, closeFromModal);
+                /*var modalCardButton = document.getElementById('card-button_ok');*/
+                /*modalCardButton.onclick = function (event) {
                     var inputCard = document.getElementById('card-input');
                     var inputCardValue = inputCard.value;
                     self.addCard(new Card(inputCardValue));
                     addCardModal.style.display = 'none';
                     inputCard.value = '';
-                }
+                }*/
             }
         });
     }
@@ -75,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
         addCard: function (card) {this.element.querySelector('ul').appendChild(card.element);},
         removeColumn: function () {this.element.parentNode.removeChild(this.element);}
     };
-    
 
     function Card(description) {
         var self = this;
@@ -114,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.querySelector('#board .create-column').addEventListener('click', function () {
-        showModal(addColumnModal, closeColumnModal);
+        showModal(addColumnModal, closeFromModal);
     });
 
     document.getElementById('column-button_ok').addEventListener('click', function () {
